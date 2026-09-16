@@ -1,0 +1,107 @@
+# ╔══════════════════════════════════════╗
+# ║          MINIMAL SWAY CONFIG         ║
+# ╚══════════════════════════════════════╝
+
+# ── Variables ──────────────────────────
+
+set $mod Mod4
+set $term foot
+set $menu tofi-drun --drun-launch=true
+
+# ── Teclado ────────────────────────────
+
+input type:keyboard {
+    xkb_layout latam
+}
+
+# ── Terminal ───────────────────────────
+
+bindsym $mod+Return exec $term
+
+# ── Launcher ───────────────────────────
+
+bindsym $mod+d exec $menu
+
+# ── Cerrar / recargar / salir ──────────
+
+bindsym $mod+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exit
+
+# ── Focus ──────────────────────────────
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# ── Mover ventanas ─────────────────────
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# ── Workspaces ─────────────────────────
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+
+# ── Layout ─────────────────────────────
+
+# Master/stack
+bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Floating
+floating_modifier $mod normal
+
+# ── Bordes ─────────────────────────────
+
+default_border pixel 2
+default_floating_border pixel 2
+
+# ── Colores ──────────────────────────
+
+client.focused          #ffffff #ffffff #111111 #ffffff #ffffff
+client.unfocused        #808080 #808080 #111111 #ffffff #808080
+client.focused_inactive #ff69b4 #ff69b4 #111111 #ffffff #ff69b4
+client.urgent            #ff0000 #ff0000 #111111 #ffffff #ff0000
+
+# ── Mouse ──────────────────────────────
+
+focus_follows_mouse yes
+
+# ── Cursor ─────────────────────────────
+
+seat seat0 hide_cursor 3000
+seat seat0 xcursor_theme Bibata-Modern-Ice 24
+
+#cliNetManager
+
+bindsym $mod+n exec foot -e nmtui
+
+# Screenshots
+bindsym Print exec grim ~/Pictures/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png
+bindsym $mod+p exec grim -g "$(slurp)" ~/Pictures/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
